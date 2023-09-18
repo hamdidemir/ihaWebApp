@@ -3,10 +3,9 @@
 Bu proje, hem yerel geliştirme ortamında hem de Docker ortamında çalıştırılabilir.
 
 Proje, aşağıdaki komutlarla başlatılabilir:
-- Yerel ortamda: `python manage.py runserver`
-- Docker ortamında: `docker-compose build` + `docker-compose up`
+- Yerel ortamda: `python manage.py runserver` .Uygulama, varsayılan olarak http://127.0.0.1:8000/ adresinde çalışır.
+- Docker ortamında: `docker-compose build` + `docker-compose up` .Uygulama, varsayılan olarak http://localhost:8000 adresinde çalışır.
 
-Uygulama, varsayılan olarak http://127.0.0.1:8000/ adresinde çalışır.
 
 Birim testleri şu komutlarla çalıştırabilirsiniz:
 - iha uygulaması için: `python manage.py test iha`
