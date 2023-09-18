@@ -1,0 +1,40 @@
+{% extends "iha/layout.html" %}
+
+{% block title %}Kiralık Geçmişi{% endblock %}
+
+{% block body %}
+    <table id="rentalHistoryTable" class="display nowrap" width="100%">
+        <thead>
+            <tr>
+                <th>Başlangıç Tarih</th>
+                <th>Başlangıç Saat</th>
+                <th>Bitiş Tarih</th>
+                <th>Bitiş Saat</th>
+                <th>İha</th>
+                <th>Adet</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for history_entry in rental_history %}
+                <tr>
+                    <td>{{ history_entry.baslangıc_tarih }}</td>
+                    <td>{{ history_entry.baslangıc_saat }}</td>
+                    <td>{{ history_entry.bitiş_tarih }}</td>
+                    <td>{{ history_entry.bitiş_saat }}</td>
+                    <td>{{ history_entry.iha.Marka }} {{ history_entry.iha.Model }}</td>
+                    <td>{{ history_entry.Adet }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{% url 'iha:delete_rental_history' %}" class="btn btn-danger">Kiralama Geçimişini Temizle</a>
+
+    <script>
+        $(document).ready(function () {
+            if ($('#rentalHistoryTable tbody tr').length > 0) {
+                $('#rentalHistoryTable').DataTable();
+            }
+        });
+    </script>
+{% endblock %}

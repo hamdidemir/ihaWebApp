@@ -1,0 +1,22 @@
+version: '3'
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"  # Map host port to container port
+    volumes:
+      - .:/app  # Mount the project directory into the container
+    environment:
+      - DEBUG=True  # Set environment variables as needed
+      - DATABASE_URL=postgres://postgres:admin@db:5432/postgres  # Connection string for your PostgreSQL database
+    depends_on:
+      - db  # Ensure the database service is running
+
+  db:
+    image: postgres:13  # Use the PostgreSQL 13 image
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: admin

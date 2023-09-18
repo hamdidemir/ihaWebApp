@@ -1,0 +1,57 @@
+{% extends "iha/layout.html" %}
+
+{% block title %}İHA{% endblock %}
+
+{% block body %}
+
+    <ul>
+        {% for iha_item in iha %}
+            <li>
+                <a href="{% url 'iha:iha_view' iha_item.id %}">
+                    İha {{ iha_item.id }}: {{ iha_item.Marka }} {{ iha_item.Model }}
+                </a>
+            </li>
+        {% endfor %}
+    </ul>
+
+    <table id="rentalTable" class="display" width="100%">
+        <thead>
+            <tr>
+                <th>Başlangıç Tarihi</th>
+                <th>Başlangıç Saati</th>
+                <th>Bitiş Tarihi</th>
+                <th>Bitiş Saati</th>
+                <th>Kira Süresi</th>
+                <th>İha</th>
+                <th>Adet</th>
+                <th>İptal</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for rental in user_rentals %}
+                <tr>
+                    <td>{{ rental.baslangıc_tarih }}</td>
+                    <td>{{ rental.baslangıc_saat }}</td>
+                    <td>{{ rental.bitiş_tarih }}</td>
+                    <td>{{ rental.bitiş_saat }}</td>
+                    <td>
+                        {{ rental.duration|floatformat:2 }} saat
+                    </td>
+                    <td>{{ rental.iha.Marka }} {{ rental.iha.Model }}</td>
+                    <td>{{ rental.Adet }}</td>
+                    <td>
+                        <a href="{% url 'iha:cancel_rental' rental.id %}" class="btn btn-danger btn-sm">İptal</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+
+    <script>
+        $(document).ready(function () {
+            $('#rentalTable').DataTable();
+        });
+    </script>
+
+{% endblock %}

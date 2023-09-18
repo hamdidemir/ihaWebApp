@@ -1,0 +1,10 @@
+{% extends "iha/layout.html" %}
+
+
+{% block body %}
+
+    <h1>Hoş Geldiniz, {{ request.user.username }}</h1>
+
+    <a href="{% url 'logout' %}">Çıkış</a>
+
+{% endblock %}

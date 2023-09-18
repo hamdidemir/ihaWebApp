@@ -1,0 +1,47 @@
+{% extends "iha/layout.html" %}
+{% block title %}İHA : {{ iha.id }}{% endblock %}
+{% block body %}
+
+    <!-- Display the image -->
+    <img src="{{ iha.image.url }}" alt="{{ iha.Marka }} Image" width="800" height="319">
+
+    <h3>İha Özellikleri</h3>
+    <ul>
+        <li>Marka : {{ iha.Marka }}</li>
+        <li>Model : {{ iha.Model }}</li>
+        <li>Faydalı Yük : {{ iha.Faydalı_yük }} kg </li>
+        <li>Havada Kalma Süresi : {{ iha.Havada_kalma_süresi }} saat</li>
+        <li>Kanat Açıklığı : {{ iha.Kanat_açıklığı }} metre</li>
+        <li>Maksimum Kalkış Ağırlığı : {{ iha.Maksimum_kalkış_ağırlığı }} kg</li>
+    </ul>
+
+    <h2>Kira Talep</h2>
+    <form method="post" action="{% url 'iha:add_rental' iha_id=iha.id %}">
+        {% csrf_token %}
+
+        <!-- Hidden field for iha_id -->
+        <input type="hidden" name="iha" value="{{ iha.id }}">
+
+        <!-- Fields for user input -->
+        <label for="Adet">Adet:</label>
+        <input type="number" name="Adet" id="Adet" required>
+
+        <label for="baslangıc_tarih">Başlangıç Tarihi:</label>
+        <input type="date" name="baslangıc_tarih" id="baslangıc_tarih" required>
+
+        <label for="baslangıc_saat">Başlangıç Saati:</label>
+        <input type="time" name="baslangıc_saat" id="baslangıc_saat" required>
+
+        <label for="bitiş_tarih">Bitiş Tarihi:</label>
+        <input type="date" name="bitiş_tarih" id="bitiş_tarih" required>
+
+        <label for="bitiş_saat">Bitiş Saati:</label>
+        <input type="time" name="bitiş_saat" id="bitiş_saat" required>
+
+        <input type="submit" value="Kira Ekle">
+    </form>
+
+    <script src="../../static/js/dateOrder.js"></script>
+
+    <a href="{% url 'iha:index' %}">Ana sayfaya dön</a>
+{% endblock %}
