@@ -2,8 +2,9 @@
 {% block title %}İHA : {{ iha.id }}{% endblock %}
 {% block body %}
 
-    <!-- Display the image -->
-    <img src="{{ iha.image.url }}" alt="{{ iha.Marka }} Image" width="800" height="319">
+    {% if iha.image %}
+        <img src="{{ iha.image.url }}" alt="{{ iha.Marka }} Image" width="800" height="319">
+    {% endif %}
 
     <h3>İha Özellikleri</h3>
     <ul>

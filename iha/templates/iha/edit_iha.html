@@ -1,0 +1,15 @@
+{% extends "iha/layout.html" %}
+
+{% block title %}Kiralık Geçmişi{% endblock %}
+
+{% block body %}
+
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Save Changes</button>
+</form>
+
+<a href="{% url 'iha:iha_view' iha_id=iha_instance.id %}">Back to iha</a>
+
+{% endblock %}

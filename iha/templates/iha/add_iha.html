@@ -1,0 +1,12 @@
+{% extends "iha/layout.html" %}
+
+{% block title %}Kiralık Geçmişi{% endblock %}
+
+{% block body %}
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Ekle</button>
+</form>
+
+{% endblock %}

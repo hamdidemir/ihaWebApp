@@ -3,17 +3,53 @@
 {% block title %}İHA{% endblock %}
 
 {% block body %}
+    <h2>İha Listesi</h2>
+    <table id="iha-table" class="display" width=100%>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Marka</th>
+                <th>Model</th>
+                <th>Faydalı yük</th>
+                <th>Havada kalma süresi</th>
+                <th>Kanat açıklığı</th>
+                <th>Maksimum kalkış ağırlığı</th>
+                <th>Güncelleme</th>
+                <th>Silme</th>
+                <th>Kiralama</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for iha_item in iha %}
+                <tr>
+                    <td>{{ iha_item.id }}</td>
+                    <td>{{ iha_item.Marka }}</td>
+                    <td>{{ iha_item.Model }}</td>
+                    <td>{{ iha_item.Faydalı_yük }}</td>
+                    <td>{{ iha_item.Havada_kalma_süresi }}</td>
+                    <td>{{ iha_item.Kanat_açıklığı }}</td>
+                    <td>{{ iha_item.Maksimum_kalkış_ağırlığı }}</td>
+                    <td>
+                        <a href="{% url 'iha:edit_iha' iha_item.id %}">
+                            <button class="Güncelleme-button">Güncelle</button>
+                        </a>
+                    </td>
+                    <td>
+                        <button class="delete-button" data-iha-id="{{ iha_item.id }}">Sil</button>
+                    </td>
+                    <td>
+                        <a href="{% url 'iha:iha_view' iha_item.id %}">
+                            <button class="kirala-button">Kirala</button>
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 
-    <ul>
-        {% for iha_item in iha %}
-            <li>
-                <a href="{% url 'iha:iha_view' iha_item.id %}">
-                    İha {{ iha_item.id }}: {{ iha_item.Marka }} {{ iha_item.Model }}
-                </a>
-            </li>
-        {% endfor %}
-    </ul>
 
+
+    <h2>Kiralık Listesi</h2>
     <table id="rentalTable" class="display" width="100%">
         <thead>
             <tr>
@@ -47,10 +83,43 @@
         </tbody>
     </table>
 
-
     <script>
-        $(document).ready(function () {
+        $(document).ready(function() {
+            // Initialize DataTables
+            $('#iha-table').DataTable();
             $('#rentalTable').DataTable();
+
+            // Add click event listener for delete buttons
+            $('#iha-table tbody').on('click', 'button.delete-button', function() {
+                var ihaId = $(this).data('iha-id');
+                var row = $(this).closest('tr');
+
+                if (confirm("Bu İHA'yı silmek istediğine emin misin?")) {
+                    // Get the CSRF token from the HTML template
+                    var csrfToken = "{{ csrf_token }}";
+
+                    // Send an AJAX request with the CSRF token
+                    $.ajax({
+                        url: "{% url 'iha:delete_iha' iha_id=0 %}".replace('0', ihaId),
+                        type: 'POST',
+                        dataType: 'json',
+                        headers: {
+                            'X-CSRFToken': csrfToken // Include the CSRF token in the headers
+                        },
+                        success: function(response) {
+                            if (response.success) {
+                                // Remove the row from the DataTable on successful deletion
+                                $('#iha-table').DataTable().row(row).remove().draw();
+                            } else {
+                                alert("Bir hata oluştu.");
+                            }
+                        },
+                        error: function() {
+                            alert("Silme sırasında bir hata oluştu.");
+                        }
+                    });
+                }
+            });
         });
     </script>
 

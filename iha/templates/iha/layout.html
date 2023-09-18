@@ -14,9 +14,9 @@
     <!-- https://favicon.io/emoji-favicons/money-bag/ -->
     <link href="/static/favicon.ico" rel="icon">
 
-    {% load static %}
-
     <link href="/static/css/styles.css" rel="stylesheet">
+
+    <!-- Include jQuery -->
     <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
 
      <!-- Include DataTables CSS -->
@@ -40,6 +40,7 @@
                 <ul class="navbar-nav me-auto mt-2">
                     <li class="nav-item"><a class="nav-link" href="{% url 'iha:index' %}">Ana Sayfa</a></li>
                     <li class="nav-item"><a class="nav-link" href="{% url 'iha:rental_history' %}">Kiralık Geçmişi</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'iha:add_iha' %}">İHA Ekle</a></li>
                 </ul>
                 <ul class="navbar-nav ms-auto mt-2">
                     <li class="nav-item"><a class="nav-link" href="{% url 'users:logout' %}">Çıkış Yap</a></li>
